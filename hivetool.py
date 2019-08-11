@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# (c) 2017 Andreas Motl <andreas@hiveeyes.org>
+# (c) 2017-2019 Andreas Motl <andreas@hiveeyes.org>
 import os
+import sys
 import json
 import requests
 from copy import copy
@@ -296,7 +297,7 @@ class HiveToolData(object):
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "html.parser")
         raw = soup.find('body').get_text()
-        #print raw
+        #print(raw)
 
         buffer = []
         for line in raw.split('\n'):
@@ -355,7 +356,7 @@ def extract_from_html(soup, rules, data):
 def single_info(hive_id=None):
     url = u'http://hivetool.org/db/hive_stats.pl?hive_id={hive_id}'.format(hive_id=hive_id)
     info = HiveToolMetadata().get_info(url)
-    print json.dumps(info, indent=4)
+    print(json.dumps(info, indent=4))
 
 def multi_info():
 
@@ -365,13 +366,13 @@ def multi_info():
     pprint(beehives)
 
     for beehive in beehives:
-        print '=' * 42
-        print beehive['name']
-        print beehive['link']
-        print '-' * 42
+        print('=' * 42)
+        print(beehive['name'])
+        print(beehive['link'])
+        print('-' * 42)
         info = metadata.get_info(beehive['link'])
-        print json.dumps(info, indent=4)
-        print
+        print(json.dumps(info, indent=4))
+        print()
 
 def multi_fetch(overwrite=False):
 
@@ -385,30 +386,31 @@ def multi_fetch(overwrite=False):
         'list': copy(beehives),
     }
     json.dump(index, file(indexfile, 'w'), indent=4)
-    print json.dumps(index, indent=4)
+    print(json.dumps(index, indent=4))
 
     for beehive in beehives:
 
-        print beehive
+        print(beehive)
 
         hive_id = int(beehive['link'].replace('http://hivetool.org/db/hive_stats.pl?hive_id=', ''))
         filename = basedir + '/{hive_id:0>5}.json'.format(hive_id=hive_id)
         if not overwrite and os.path.exists(filename):
-            print 'Skipping hive name={name}, id={hive_id}. File {file} already exists.'.format(name=beehive['name'], hive_id=hive_id, file=filename)
+            print('Skipping hive name={name}, id={hive_id}. File {file} already exists.'.format(name=beehive['name'], hive_id=hive_id, file=filename))
             continue
 
-        print '=' * 42
-        print beehive['name']
-        print beehive['link']
-        print filename
-        print '-' * 42
+        print('=' * 42)
+        print(beehive['name'])
+        print(beehive['link'])
+        print(filename)
+        print('-' * 42)
 
         info = metadata.get_info(beehive['link'])
         info['baseinfo'] = copy(beehive)
         json.dump(info, file(filename, 'w'), indent=4)
 
-        print json.dumps(info, indent=4)
-        print
+        print(json.dumps(info, indent=4))
+        print()
+
 
 def single_data(hive_id):
     htdata = HiveToolData(hive_id=hive_id)
