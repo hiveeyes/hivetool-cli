@@ -295,6 +295,11 @@ class HiveToolData(object):
     def fetch_csv(self):
         url = self.DATA_URL_TEMPLATE.format(hive_id=self.hive_id)
         response = requests.get(url)
+
+        if response.status_code != 200:
+            print(response.text)
+            raise ValueError('Fetching data from URL {} failed'.format(url))
+
         soup = BeautifulSoup(response.content, "html.parser")
         raw = soup.find('body').get_text()
         #print(raw)
@@ -417,23 +422,23 @@ def single_data(hive_id):
     data = htdata.fetch_csv()
     print(data)
 
+
 def main():
 
-    # Anastasia
-    #single_info(hive_id=77)
+    action = sys.argv[1]
+    hive_id = int(sys.argv[2])
 
-    # BEE-SIDE01
-    #single_info(hive_id=84)
+    if action == 'info':
+        single_info(hive_id)
 
-    # BEE-SIDE01
-    #single_info(hive_id=99)
+    elif action == 'data':
+        single_data(hive_id)
 
+    # TODO
     #multi_info()
-
     #multi_fetch(overwrite=False)
     #multi_fetch(overwrite=True)
 
-    single_data(94)
 
 if __name__ == '__main__':
     main()
