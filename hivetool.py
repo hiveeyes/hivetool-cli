@@ -285,9 +285,14 @@ class HiveToolMetadata(object):
 
 class HiveToolData(object):
 
-    DATA_URL_TEMPLATE = 'http://hivetool.org/db/hive_graph5m.pl?hive_id={hive_id}&units=Metric&begin=2010-01-01%2000:00:00&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv'
-    #DATA_URL_TEMPLATE = 'http://hivetool.org/db/hive_graph5m.pl?hive_id=113&units=Metric&begin=2017-07-28%2023:59:59&end=2017-08-04%2023:59:59&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv'
-    #DATA_URL_TEMPLATE = 'http://hivetool.org/db/hive_graph5m.pl?hive_id=113&units=Metric&begin=2017-07-28%2023:59:59&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv'
+    # 2017
+    # http://hivetool.org/db/hive_graph5m.pl?hive_id=113&units=Metric&begin=2017-07-28%2023:59:59&end=2017-08-04%2023:59:59&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv
+    # http://hivetool.org/db/hive_graph5m.pl?hive_id=113&units=Metric&begin=2017-07-28%2023:59:59&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv
+    # http://hivetool.org/db/hive_graph5m.pl?hive_id={hive_id}&units=Metric&begin=2010-01-01%2000:00:00&weight_filter=Raw&nasa_weight_dwdt=60&midnight=0&download=Download&download_file_format=csv
+
+    # 2019
+    # view-source:http://hivetool.net/db/hive_graph706.pl?chart=Temperature&start_time=2019-08-04+23%3A59%3A59&end_time=2019-08-11+23%3A59%3A59&hive_id=77&number_of_days=7&last_max_dwdt_lbs_per_hour=30&weight_filter=Raw&max_dwdt_lbs_per_hour=&days=&begin=&end=&units=Metric&undefined=Skip&download_data=Download&download_file_format=csv
+    DATA_URL_TEMPLATE = 'http://hivetool.net/db/hive_graph706.pl?hive_id={hive_id}&start_time=2019-01-01&end_time=&number_of_days=30&last_max_dwdt_lbs_per_hour=60&weight_filter=Raw&max_dwdt_lbs_per_hour=&days=&begin=&end=&units=Metric&undefined=Skip&download_file_format=csv'
 
     def __init__(self, hive_id):
         self.hive_id = hive_id
@@ -359,7 +364,7 @@ def extract_from_html(soup, rules, data):
 
 
 def single_info(hive_id=None):
-    url = u'http://hivetool.org/db/hive_stats.pl?hive_id={hive_id}'.format(hive_id=hive_id)
+    url = u'http://hivetool.net/db/hive_stats.pl?hive_id={hive_id}'.format(hive_id=hive_id)
     info = HiveToolMetadata().get_info(url)
     print(json.dumps(info, indent=4))
 

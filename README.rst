@@ -8,6 +8,10 @@ About
 *****
 Acquire data from HiveTool.net.
 
+Attention: This piece of software worked in 2017. However,
+for making it work in 2019, it will have to be adjusted.
+
+So: This program is currently defunct, sorry!
 
 
 ********
